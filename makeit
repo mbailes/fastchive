@@ -1,0 +1,27 @@
+echo compiling profile.C dialog.C and plot.C into program profile
+echo requires path the cpgplot.h file and library for cpgplot and pgplot
+
+g++ -c -I/apps/users/pulsar/${SYS_ARCH}/gcc-11.3.0/software/fftw-SP/3.3.8/include/ -O3 Sinc.C
+g++ -c -I/apps/users/pulsar/${SYS_ARCH}/gcc-11.3.0/software/pgplot/5.2 -O3 plot.C
+g++ -c -I/apps/users/pulsar/${SYS_ARCH}/gcc-11.3.0/software/pgplot/5.2 -O3 heat.C
+g++ -c -O3 tsky.C
+g++ -c -O3 -I/apps/users/pulsar/${SYS_ARCH}/gcc-11.3.0/software/pgplot/5.2 dialog.C
+
+echo linking
+g++ -o profile profile.C -I. dialog.o heat.o plot.o tsky.o Sinc.o -I/apps/users/pulsar/${SYS_ARCH}/gcc-11.3.0/software/pgplot/5.2 -I/apps/users/pulsar/${SYS_ARCH}/gcc-11.3.0/software/fftw-SP/3.3.8/include/ -lm -lcpgplot -lpgplot -lX11 -L/apps/users/pulsar/${SYS_ARCH}/gcc-11.3.0/software/pgplot/5.2 -lcpgplot -lpgplot -lpng -lX11 -lgfortran -Wall -O3 -Ofast -fopenmp -L/apps/users/pulsar/${SYS_ARCH}/gcc-11.3.0/software/fftw-SP/3.3.8/lib -lfftw3f
+
+#if ( $status == 0 ) then
+   echo moving profile to ~/bin/$SYS_ARCH/xprof
+   mv profile ~/bin/${SYS_ARCH}/xprof
+#else
+#   echo error linking profile
+#endif
+
+#echo linking pratyasha plot
+
+#g++ -o pratyasha pratyasha.C -I. dialog.o heat.o plot.o tsky.o Sinc.o -I/apps/users/pulsar/${SYS_ARCH}/gcc-11.3.0/software/pgplot/5.2 -I/apps/users/pulsar/${SYS_ARCH}/gcc-11.3.0/software/fftw-SP/3.3.8/include/ -lm -lcpgplot -lpgplot -lX11 -L/apps/users/pulsar/${SYS_ARCH}/gcc-11.3.0/software/pgplot/5.2 -lcpgplot -lpgplot -lpng -lX11 -lgfortran -Wall -O3 -Ofast -fopenmp -L/apps/users/pulsar/${SYS_ARCH}/gcc-11.3.0/software/fftw-SP/3.3.8/lib -lfftw3f
+
+#echo moving pratyasha to ~/bin/$SYS_ARCH/pratyasha
+#mv pratyasha ~/bin/$SYS_ARCH
+
+exit
